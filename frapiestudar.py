@@ -48,32 +48,42 @@ def paths(arr):
         second_path = "lfw/" + arr[0] + "/" + arr[0] + "_" + zeros(arr[2]) + arr[2] + ".jpg"
 
     else:
-        first_path = "lfw/" + arr[0] + "/" + arr[0] + "_" + zeros(arr[2]) + arr[2] + ".jpg"
-        second_path = "lfw/" + arr[0] + "/" + arr[0] + "_" + zeros(arr[3]) + arr[3] + ".jpg"
+        first_path = "lfw/" + arr[0] + "/" + arr[0] + "_" + zeros(arr[1]) + arr[1] + ".jpg"
+        second_path = "lfw/" + arr[2] + "/" + arr[2] + "_" + zeros(arr[3]) + arr[3] + ".jpg"
 
 
     return first_path, second_path
 
 #main
 
-pairs = np.loadtxt('./pairs.txt', dtype='str', skiprows=1, max_rows=300)
-scores = []
+pairs_matched = np.loadtxt('./pairs.txt', dtype='str', skiprows=1, max_rows=300)
+scores_matched = []
+pairs_mismatched = np.loadtxt('./pairs.txt', dtype='str', skiprows=301, max_rows=300)
+scores_mismatched = []
 
 print("Loading...")
 
-for pair in pairs:
+for pair in pairs_matched:
    
     first_path, second_path = paths(pair)
     image_b641 = get_base64(first_path)
     image_b642 = get_base64(second_path)
     data = [image_b641, image_b642]
     score = similarity_score(data)
-    scores.append(score)
+    scores_matched.append(score)
 
-np.savetxt('similarity.txt', scores)
+np.savetxt('similarity_matched.txt', scores_matched)
+
+for pair in pairs_mismatched:
+   
+    first_path, second_path = paths(pair)
+    image_b641 = get_base64(first_path)
+    image_b642 = get_base64(second_path)
+    data = [image_b641, image_b642]
+    score = similarity_score(data)
+    scores_mismatched.append(score)
+
+np.savetxt('similarity_mismatched.txt', scores_mismatched)
 
 print("Done!")
     
-
-
-
