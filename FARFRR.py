@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
+#funcoes
+
 def min_max(arr):
     min = arr[0]
     max = arr[0]
@@ -22,6 +24,7 @@ def normalize(arr):
 
     return res
 
+#main
 
 matched_scores_arr = np.loadtxt('similarity_matched.txt')
 mismatched_scores_arr = np.loadtxt('similarity_mismatched.txt')
